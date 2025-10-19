@@ -65,13 +65,31 @@ def main():
     tic = time.time()
     data = get_taco_spots(Path("tacos_data.csv"))
 
-    permutations = list(itertools.permutations(data, 8))
-    best_routing, max_score, tastiness, distance = get_best_permutation(permutations)
+
+    all_routing = []
+    all_scores = []
+    all_tastiness = []
+    all_distances = []
+    for n in range(1, 9):
+        permutations = list(itertools.permutations(data, n))
+        best_routing, max_score, tastiness, distance = get_best_permutation(permutations)
+
+        all_routing.append(best_routing)
+        all_scores.append(max_score)
+        all_tastiness.append(tastiness)
+        all_distances.append(distance)
+
+    best_index = all_scores.index(max(all_scores))
+
+    best_routing = all_routing[best_index]
+    best_score = all_scores[best_index]
+    best_tastiness = all_tastiness[best_index]
+    best_distance = all_distances[best_index]
 
     print(f"Best routing: {[x.number for x in best_routing]}")
-    print(f"Tastiness: {tastiness}")
-    print(f"Total distance: {distance}")
-    print(f"Tastiness per distance: {max_score}")
+    print(f"Tastiness: {best_tastiness}")
+    print(f"Total distance: {best_distance}")
+    print(f"Tastiness per distance: {best_score}")
 
     tac = time.time()
 
