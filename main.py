@@ -66,10 +66,12 @@ def main():
     data = get_taco_spots(Path("tacos_data.csv"))
 
     permutations = list(itertools.permutations(data, 8))
+    best_routing, max_score, tastiness, distance = get_best_permutation(permutations)
 
-    best_comb, max_score, tastiness, distance = get_best_permutation(permutations)
-    print([x.number for x in best_comb])
-    print(f"Tastiness of {tastiness} with a distance of {distance}, so score is {max_score}")
+    print(f"Best routing: {[x.number for x in best_routing]}")
+    print(f"Tastiness: {tastiness}")
+    print(f"Total distance: {distance}")
+    print(f"Tastiness per distance: {max_score}")
 
     tac = time.time()
 
