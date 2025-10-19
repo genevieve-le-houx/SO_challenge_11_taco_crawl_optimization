@@ -19,6 +19,9 @@ class TacoSpot:
     tastiness: int = field(metadata=config(field_name="Tastiness"))
 
 
+starting_spot = TacoSpot(0, 0, 0, 0)
+
+
 def get_taco_spots(filepath: Path) -> List[TacoSpot]:
     data: List[TacoSpot] = []
 
@@ -38,8 +41,9 @@ def get_permutation_score(permutation: Tuple[TacoSpot, ...]) -> Tuple[float, int
     total_tastiness = sum(x.tastiness for x in permutation)
 
     # One start at (0, 0) so add this distance first
-    total_distance = get_distance_between_spots(permutation[0], TacoSpot(0, 0, 0, 0))
+    total_distance = get_distance_between_spots(permutation[0], starting_spot)
 
+    # Add the distance of the others
     for i, taco_spot in enumerate(permutation[1:], 1):
         total_distance += get_distance_between_spots(taco_spot, permutation[i - 1])
 
