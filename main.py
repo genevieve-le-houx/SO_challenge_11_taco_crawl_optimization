@@ -37,7 +37,8 @@ def get_distance_between_spots(spot1: TacoSpot, spot2: TacoSpot) -> float:
 def get_permutation_score(permutation: Tuple[TacoSpot, ...]) -> Tuple[float, int, float]:
     total_tastiness = sum(x.tastiness for x in permutation)
 
-    total_distance = 0
+    # One start at (0, 0) so add this distance first
+    total_distance = get_distance_between_spots(permutation[0], TacoSpot(0, 0, 0, 0))
 
     for i, taco_spot in enumerate(permutation[1:], 1):
         total_distance += get_distance_between_spots(taco_spot, permutation[i - 1])
